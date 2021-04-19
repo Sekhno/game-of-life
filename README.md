@@ -3,7 +3,7 @@
 
 Working implementation without proper UI and features.
 
-[Click here]( https://sekhno.github.io/game-of-life/) to play.
+[Click here]( https://sekhno.github.io/game-of-life/src) to play.
 
 ## Hotkeys:
 
