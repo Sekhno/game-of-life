@@ -74,6 +74,6 @@ define(['./app/game.js'], function (ArkanoidGame) {
     document.onclick = function(){
         arkanoidGame.startGame();
     }
-
+ 
 })
 
