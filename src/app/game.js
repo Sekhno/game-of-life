@@ -4,7 +4,7 @@
  * Copyright (C) Dmitry Sekhno, 2021
  */
 
-define([], function(){
+define(['./constants/ball-dirs.js', './constants/bricks-types.js'], function(BallDirs, BricksTypes){
     'use strict';
 
     /**
@@ -23,17 +23,6 @@ define([], function(){
     }
 
     /**
-     * @constant BallDirs
-     */
-    const BallDirs = {
-        NONE: 0,
-        LEFT: 1,
-        RIGHT: 2,
-        UP: 4,
-        DOWN: 8
-    }
-
-    /**
      * @class Ball
      * @param x {Number} X coordinate of ball
      * @param y {Number} Y coordinate of ball
@@ -48,18 +37,6 @@ define([], function(){
         this.radius = radius;
         this.dir = dir;
         this.speed = speed;
-    }
-
-    /**
-     * @constant BricksTypes
-     */
-    const BricksTypes = {
-        DEFAULT: 1,
-        ICE: 1,
-        WOOD: 2,
-        STONE: 3,
-        IRON: 4,
-        STEEL: 5
     }
 
     /**
@@ -436,19 +413,6 @@ define([], function(){
         }
 
     }
-
-    /**
-     * 
-     * @param {Number} min 
-     * @param {Number} max 
-     * @returns {Number}
-     */
-    function getRandomRange(min, max) {
-        return Math.random() * (max - min + 1) + min;
-    }
-
-    
-
     
     return ArkanoidGame;
 
