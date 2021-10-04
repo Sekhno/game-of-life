@@ -86,14 +86,14 @@ define(['./constants/ball-dirs.js', './constants/bricks-types.js'], function(Bal
      */
     function ArkanoidGame (canvas, context) {
 
-        var PADDLE_WIDTH = 60;
-        var PADDLE_HEIGHT = 10;
+        var PADDLE_WIDTH = 100;
+        var PADDLE_HEIGHT = 20;
         var PADDLE_SPEED = 1;
-        var BALL_RADIUS = 3;
+        var BALL_RADIUS = 10;
         var BALL_DEFAULT_SPEED = 3;
         var BALL_MAX_SPEED = 6;
-        var BRICK_WIDTH = 80;
-        var BRICK_HEIGHT = 35;
+        var BRICK_WIDTH = canvas.width / 8; //80;
+        var BRICK_HEIGHT = canvas.height / 8; //35;
         var BRICK_SCORE = 100;
 
         this.level = 0;

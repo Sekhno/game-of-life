@@ -13,8 +13,8 @@ require.config({
 
 define(['./app/game.js'], function (ArkanoidGame) {
     
-    var arkanoidGame;
-    var reqId;
+    let arkanoidGame;
+    let reqId;
 
     // checkCanvasIsSupported()
     innerCanvas(function (canvas) {
@@ -64,8 +64,8 @@ define(['./app/game.js'], function (ArkanoidGame) {
      */
     function checkCanvasIsSupported() {
         canvas = document.getElementById("gameCanvas");
-        canvas.width = 640;
-        canvas.height = 480;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         canvas.style.cursor = "none";
         if (canvas.getContext) {
             context = canvas.getContext('2d');
@@ -73,7 +73,8 @@ define(['./app/game.js'], function (ArkanoidGame) {
             arkanoidGame = new ArkanoidGame(canvas, context);
             arkanoidGame.init();
 
-            setInterval(render, 1000 / 60);
+            requestAnimationFrame(render)
+            // setInterval(render, 1000 / 60);
         } else {
             alert("Sorry, but your browser doesn't support a canvas.");
         }
@@ -85,13 +86,13 @@ define(['./app/game.js'], function (ArkanoidGame) {
      * @returns {HTMLCanvasElement} canvas
      */
     function innerCanvas(cb){
-        var table = document.createElement("table"),
-            td = document.createElement("td"),
-            tr = document.createElement("tr"),
-            canvas = document.createElement("canvas");
+        var table = document.createElement('table'),
+            td = document.createElement('td'),
+            tr = document.createElement('tr'),
+            canvas = document.createElement('canvas');
         table.appendChild(tr);
         tr.appendChild(td);
-        canvas.setAttribute("id", "gameCanvas");
+        canvas.setAttribute('id', 'gameCanvas');
         td.appendChild(canvas);
         document.body.appendChild(table)
         if (typeof cb === 'function') cb(canvas)
@@ -103,13 +104,14 @@ define(['./app/game.js'], function (ArkanoidGame) {
      * @returns void
      */
     function innerStartPage(canvas){
+        
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         if (canvas.getContext) {
             context = canvas.getContext('2d');
 
-            var maxDist = 100;
-            var nodes = [];
+            const maxDist = 100;
+            const nodes = [];
 
             for (var i = 0; i < maxDist; i++) {
                 nodes.push({
@@ -120,7 +122,7 @@ define(['./app/game.js'], function (ArkanoidGame) {
                 })
             }
 
-            var update = function(){
+            const update = function(){
                 var width = canvas.width,
                     height = canvas.height;
                 context.clearRect(0, 0, width, height);
@@ -162,9 +164,9 @@ define(['./app/game.js'], function (ArkanoidGame) {
                     }
                 }
 
-                context.font = "48px monospace";
+                context.font = '48px monospace';
                 context.textAlign = 'center'
-                context.fillText("Arkanoid", width/2, height/2)
+                context.fillText('Arkanoid', width/2, height/2)
                 reqId = requestAnimationFrame(update)
 
             }
@@ -180,6 +182,7 @@ define(['./app/game.js'], function (ArkanoidGame) {
      */
     function render() {
         arkanoidGame.render();
+        requestAnimationFrame(render)
     }
 
     /**
@@ -201,9 +204,5 @@ define(['./app/game.js'], function (ArkanoidGame) {
         LEFT: 37,
         RIGHT: 39
     };
-
-
-    
- 
 })
 
