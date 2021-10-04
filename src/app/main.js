@@ -3,48 +3,58 @@
  * Copyright (C) Dmitry Sekhno, 2021
  */
 
+const { fromEvent } = rxjs
+const { map } = rxjs.operators
+
 require.config({
     baseUrl: '',
     paths: {}
 });
 
 define(['./app/game.js'], function (ArkanoidGame) {
+    
     var arkanoidGame;
     var reqId;
 
     // checkCanvasIsSupported()
     innerCanvas(function (canvas) {
         innerStartPage(canvas);
-
-        document.onkeydown = function(event) {
-            var keyCode;
-            if (event == null) {
-                keyCode = window.event.keyCode;
-            } else {
-                keyCode = event.keyCode;
-            }
-            switch (keyCode) {
-                case KeyCodes.SPACE:
-                    arkanoidGame.togglePause();
-                    break;
-                default:
-                    break;
-            }
-        }
         
-        document.onmousemove = function(event) {
-            arkanoidGame.setPaddlePos(event.pageX);
-        }
-        
-        document.onclick = function(){
+        const clicks = fromEvent(document, 'click')
+        const clickSubscribtion = clicks.subscribe(e => {
             cancelAnimationFrame(reqId);
-            innerCanvas(function(canvas){
-                checkCanvasIsSupported();
-                arkanoidGame.startGame();
-            })
-            
-            
-        }
+            checkCanvasIsSupported();
+            arkanoidGame.startGame();
+
+            const keydown = fromEvent(document, 'keydown');
+            const keydownSubscribtion = keydown.subscribe(e => {
+                console.log(e.keyCode)
+                switch (e.keyCode) {
+                    case KeyCodes.SPACE:
+                        arkanoidGame.togglePause();
+                        break;
+                    case KeyCodes.ENTER:
+                        arkanoidGame.startGame()
+                        break;
+                    case KeyCodes.LEFT:
+                        arkanoidGame.movePaddleLeft()
+                        break;
+                    case KeyCodes.RIGHT:
+                        arkanoidGame.movePaddleRight()
+                        break;
+                    default:
+                        break;
+
+                }
+            });
+
+            const mousemove = fromEvent(document, 'mousemove');
+            const mousemoveSubscribtion = mousemove.subscribe(e => {
+                arkanoidGame.setPaddlePos(e.pageX);
+            });
+            clickSubscribtion.unsubscribe();
+        })
+        
         // checkCanvasIsSupported()
     });
 
@@ -186,7 +196,10 @@ define(['./app/game.js'], function (ArkanoidGame) {
      * @constant
      */
      const KeyCodes = {
-        SPACE : 32
+        SPACE : 32,
+        ENTER: 13,
+        LEFT: 37,
+        RIGHT: 39
     };
 
 
