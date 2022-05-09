@@ -11,13 +11,14 @@ require.config({
     paths: {}
 });
 
+
+
 define(['./app/game.js'], function (ArkanoidGame) {
     
     let arkanoidGame;
     let reqId;
 
-    // checkCanvasIsSupported()
-    toggleFullScreen();
+
     innerCanvas(function (canvas) {
         innerStartPage(canvas);
         
@@ -26,6 +27,7 @@ define(['./app/game.js'], function (ArkanoidGame) {
             cancelAnimationFrame(reqId);
             checkCanvasIsSupported();
             arkanoidGame.startGame();
+            toggleFullScreen();
 
             const keydown = fromEvent(document, 'keydown');
             const keydownSubscribtion = keydown.subscribe(e => {
@@ -35,7 +37,7 @@ define(['./app/game.js'], function (ArkanoidGame) {
                         arkanoidGame.togglePause();
                         break;
                     case KeyCodes.ENTER:
-                        arkanoidGame.startGame()
+                        arkanoidGame.startGame();
                         break;
                     case KeyCodes.LEFT:
                         arkanoidGame.movePaddleLeft()
@@ -57,6 +59,7 @@ define(['./app/game.js'], function (ArkanoidGame) {
         })
         
         // checkCanvasIsSupported()
+
     });
 
     /**
