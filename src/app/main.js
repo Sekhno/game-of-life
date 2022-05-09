@@ -17,6 +17,7 @@ define(['./app/game.js'], function (ArkanoidGame) {
     let reqId;
 
     // checkCanvasIsSupported()
+    toggleFullScreen();
     innerCanvas(function (canvas) {
         innerStartPage(canvas);
         
@@ -193,6 +194,19 @@ define(['./app/game.js'], function (ArkanoidGame) {
      */
     function getRandomRange(min, max) {
         return Math.random() * (max - min + 1) + min;
+    }
+
+    /*
+     * Toggle full screen function
+     */
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
     }
 
     /**
